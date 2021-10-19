@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Captains\Auth;
+namespace App\Http\Requests\Api\Passengers\Auth;
 
 use App\Http\Requests\Api\APIRequest;
 
-class LoginRequest extends APIRequest
+class VerifyRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class LoginRequest extends APIRequest
     public function rules()
     {
         return [
-            'mobile' => 'required',
-            'password' => 'required',
-        ];
+            // 'mobile' => ['required',new Phone],
+            'mobile' => 'required|exists:passengers,mobile',
+            'verification_code' => 'required|numeric'
+         ];
     }
 }

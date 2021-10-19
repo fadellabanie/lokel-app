@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Captains\Auth;
+namespace App\Http\Requests\Api\Passengers\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\APIRequest;
 
-class ChangePasswordRequest extends FormRequest
+class LoginRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ChangePasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class ChangePasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'mobile' => 'required',
+            'password' => 'required',
         ];
     }
 }

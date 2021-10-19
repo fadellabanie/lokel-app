@@ -1,30 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Captains\Auth;
+namespace App\Http\Controllers\Api\V1\Passengers\Auth;
 
 use Carbon\Carbon;
 use App\Models\Verify;
-use App\Models\Captain;
+use App\Models\passenger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\Captains\ProviderResource;
-use App\Http\Requests\Api\Captains\Auth\LoginRequest;
-use App\Http\Requests\Api\Captains\Auth\VerifyRequest;
-use App\Http\Requests\Api\Captains\Auth\RegisterRequest;
-use App\Http\Requests\Api\Captains\Auth\ChangePasswordRequest;
+use App\Http\Resources\Passengers\PassengerResource;
+use App\Http\Requests\Api\Passengers\Auth\LoginRequest;
+use App\Http\Requests\Api\Passengers\Auth\VerifyRequest;
+use App\Http\Requests\Api\Passengers\Auth\RegisterRequest;
+use App\Http\Requests\Api\Passengers\Auth\ChangePasswordRequest;
 
 class AuthController extends Controller
 {
-    /**
+   /**
      * Register new user
      * @param  RegisterRequest $request
      * @return mixed
      */
     public function register(RegisterRequest $request)
     {
-        $captain = Captain::create([
+        $passenger = Passenger::create([
             'code' =>  generateRandomCode('PRV'),
             'full_name' => $request->full_name,
             'mobile' => $request->mobile,
@@ -42,17 +42,17 @@ class AuthController extends Controller
             'status' => false,
         ]);
 
-        $token =  $captain->createToken('Token-Login')->accessToken;
+        $token =  $passenger->createToken('Token-Login')->accessToken;
 
-        $captain->update([
+        $passenger->update([
             'remember_token' => $token
         ]);
-        $captain->userToken()->create([
+        $passenger->userToken()->create([
             'token' => $token,
             'device_id' => '$request->device_id',
             'device_type' => '$request->device_type',
         ]);
-        $this->sendCode($request->mobile, $captain->id, 'register');
+        $this->sendCode($request->mobile, $passenger->id, 'register');
 
         return $this->successStatus(__("send code to your number - 4444"));
     }
@@ -63,26 +63,26 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $captain = Captain::whereMobile($request->mobile)->first();
+       $passenger = Passenger::whereMobile($request->mobile)->first();
 
-        if (!$captain) return $this->errorStatus(__('Unauthorized'));
-
-        if (!$captain->mobile_verified_at) {
+       if(!$passenger)return $this->errorStatus(__('Unauthorized'));
+        
+        if (!$passenger->mobile_verified_at) {
             return $this->errorStatus(__('not verified'));
         }
-        $token = $captain->createToken('Token-Login')->accessToken;
+        $token = $passenger->createToken('Token-Login')->accessToken;
 
-        $captain->update([
+        $passenger->update([
             'remember_token' => $token,
             'device_token' => $request->device_token,
         ]);
-
-        $data = DB::table('oauth_access_tokens')->where('user_id', $captain->id)->get();
-        if ($data) {
-            DB::table('oauth_access_tokens')->where('user_id', $captain->id)->delete();
-        }
-
-        return $this->respondWithItem(new ProviderResource($captain));
+        
+        $data = DB::table('oauth_access_tokens')->where('user_id',$passenger->id)->get();
+        if($data){
+           DB::table('oauth_access_tokens')->where('user_id',$passenger->id)->delete();
+          }
+        
+        return $this->respondWithItem(new PassengerResource($passenger));
     }
 
 
@@ -106,8 +106,8 @@ class AuthController extends Controller
         $message = "Your verification code is: {$verificationCode}";
 
         // SMS 
-        // $senderFactory = new SenderFactory();
-        // $senderFactory->initialize('sms', $mobile, $message);
+       // $senderFactory = new SenderFactory();
+       // $senderFactory->initialize('sms', $mobile, $message);
 
         return $this->successStatus(__('Send SMS Successfully Please Check Your Phone ' . $verificationCode));
     }
@@ -119,8 +119,8 @@ class AuthController extends Controller
      */
     public function verifyChangePassword(ChangePasswordRequest $request)
     {
-        $captain = Captain::where('mobile', $request->mobile)->first();
-        $this->sendCode($request->mobile, $captain->id, 'change-password');
+        $passenger = Passenger::where('mobile', $request->mobile)->first();
+        $this->sendCode($request->mobile, $passenger->id, 'change-password');
 
         return $this->successStatus(__('Send SMS Successfully Please Check Your Phone'));
     }
@@ -131,19 +131,19 @@ class AuthController extends Controller
      */
     public function changePassword(Request $request)
     {
-        $captain = Captain::where('mobile', $request->mobile)->first();
-        $captain->update(['password' => bcrypt($request->new_password)]);
+        $passenger = Passenger::where('mobile', $request->mobile)->first();
+        $passenger->update(['password' => bcrypt($request->new_password)]);
 
-        return $this->respondWithItem(new ProviderResource($captain));
+        return $this->respondWithItem(new PassengerResource($passenger));
     }
     /**
-     * Check Captains 
+     * Check Passengers 
      * @param  VerifyRequest $request
      * @return mixed
      */
     public function check(VerifyRequest $request)
     {
-        $captain = Captain::whereMobile($request->mobile)->first();
+        $passenger = Passenger::whereMobile($request->mobile)->first();
 
         //check if provider has verification code
         $verify = Verify::whereMobile($request->mobile)->latest()->first();
@@ -166,10 +166,10 @@ class AuthController extends Controller
         //     return $this->successStatus(__('Verification code is valid'));
         // }
 
-        $captain->update(['mobile_verified_at' => now()]);
+        $passenger->update(['mobile_verified_at' => now()]);
 
 
-        return $this->respondWithItem(new ProviderResource($captain));
+        return $this->respondWithItem(new PassengerResource($passenger));
     }
 
     /**

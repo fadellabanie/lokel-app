@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\Captains\Auth;
+namespace App\Http\Requests\Api\Passengers\Auth;
 
 use App\Http\Requests\Api\APIRequest;
 
@@ -29,8 +29,8 @@ class RegisterRequest extends APIRequest
             'nationality_id' => 'required|exists:nationalities,id',
             'full_name' => 'required|min:3|max:100',
             'country_of_residence' => 'required|min:3|max:100',
-            'email' => 'required|email|unique:captains',
-            'mobile' => 'required|unique:captains',
+            'email' => 'required|email|unique:passengers',
+            'mobile' => 'required|unique:passengers',
             'country_code' => 'required',
             'password' => 'required|min:8',
             'avatar' => 'required',

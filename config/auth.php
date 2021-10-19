@@ -39,10 +39,14 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
-        ], 
+        ],
         'captains' => [
             'driver' => 'passport',
             'provider' => 'captains',
+        ],
+        'passengers' => [
+            'driver' => 'passport',
+            'provider' => 'passengers',
         ],
     ],
 
@@ -68,9 +72,13 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-         'captains' => [
+        'captains' => [
             'driver' => 'eloquent',
             'model' => App\Models\Captain::class,
+        ], 
+        'passengers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Passenger::class,
         ],
 
         // 'users' => [

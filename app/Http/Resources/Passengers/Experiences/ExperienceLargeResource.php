@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Captains;
+namespace App\Http\Resources\Passengers\Experiences;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProviderResource extends JsonResource
+class ExperienceLargeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

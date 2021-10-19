@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Captains\Auth;
+namespace App\Http\Requests\Api\Passengers\Auth;
 
-use App\Http\Requests\Api\APIRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class VerifyRequest extends APIRequest
+class ChangePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class VerifyRequest extends APIRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,9 +24,7 @@ class VerifyRequest extends APIRequest
     public function rules()
     {
         return [
-            // 'mobile' => ['required',new Phone],
-            'mobile' => 'required|exists:captains,mobile',
-            'verification_code' => 'required|numeric'
-         ];
+            //
+        ];
     }
 }
