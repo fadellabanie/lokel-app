@@ -30,4 +30,9 @@ class Passenger extends Authenticatable
     {
         return $this->belongsTo(Country::class);
     }
+
+    public function experiences()
+    {
+        return $this->belongsToMany(Experience::class, 'experience_passenger','passenger_id','experience_id')->withTimestamps();
+    }
 }

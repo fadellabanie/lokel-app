@@ -9,6 +9,7 @@ use App\Http\Resources\Passengers\Captains\CaptainCollection;
 use App\Http\Resources\Passengers\Captains\CaptainLargeResource;
 use App\Http\Resources\Captains\Experiences\ExperienceCollection;
 use App\Http\Resources\Captains\Experiences\ExperienceLargeResource;
+use Illuminate\Http\Request;
 
 class CaptainController extends Controller
 {
@@ -17,9 +18,19 @@ class CaptainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $captain = Captain::active()->orderBy('type', 'DESC')->paginate();
+        $captain = Captain::active()
+        ->when($request->city_id, function ($q) use ($request) {
+            $q->where('city_id', $request->city_id);
+        })->when($request->country_id, function ($q) use ($request) {
+            $q->where('country_id', $request->country_id);
+        })->when($request->gender, function ($q) use ($request) {
+            $q->where('gender', $request->gender);
+        })->when($request->nationality_id, function ($q) use ($request) {
+            $q->where('nationality_id', $request->nationality_id);
+        })
+        ->orderBy('type', 'DESC')->paginate();
 
         return new CaptainCollection($captain);
     }

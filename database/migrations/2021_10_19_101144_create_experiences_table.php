@@ -25,6 +25,7 @@ class CreateExperiencesTable extends Migration
             $table->string('thumbnail');
             $table->tinyInteger('duration_type')->comment('day or minutes');
             $table->integer('duration')->comment('in minutes');
+            $table->integer('capacity')->default(1);
             $table->double('price');
             $table->longText('included');
             $table->longText('expect');

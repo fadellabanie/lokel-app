@@ -18,17 +18,17 @@ class Experience extends Model
     protected $fillable = [
         'city_id', 'country_id', 'captain_id', 'icon', 'title', 'code', 'description', 'thumbnail',
         'duration_type', 'duration', 'price', 'included', 'expect', 'faqs', 'pick_up_address', 'pick_up_lat',
-        'pick_up_lng', 'dropp_of_address', 'dropp_of_lat', 'dropp_of_lng', 'meals','status'
+        'pick_up_lng', 'dropp_of_address', 'capacity', 'dropp_of_lat', 'dropp_of_lng', 'meals', 'status'
     ];
 
     public function scopeActive($query)
     {
         return $query->where('status', self::ACCEPT);
     }
-     public function scopeMy($query)
+    public function scopeMy($query)
     {
         return $query->where('captain_id', Auth::id());
-    } 
+    }
     public function city()
     {
         return $this->belongsTo(City::class);
@@ -40,5 +40,9 @@ class Experience extends Model
     public function captain()
     {
         return $this->belongsTo(Captain::class);
+    }
+    public function passengers()
+    {
+        return $this->belongsToMany(Passenger::class, 'experience_passenger', 'experience_id', 'passenger_id')->withTimestamps();
     }
 }

@@ -24,7 +24,6 @@ if (!function_exists('uploadToPublic')) {
 if (!function_exists('isActive')) {
 	function isActive($type,$end_date="")
 	{
-
 		if ($type == 1 || $end_date >= now()) {
 			return '<div class="badge badge-light-success fw-bolder">' . __("Active") . '</div>';
 		} else{

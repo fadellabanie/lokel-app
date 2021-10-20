@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\V1\General\GeneralController;
 use App\Http\Controllers\Api\V1\Captains\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Passengers\Auth\AuthController as PassengerAuthController;
 use App\Http\Controllers\Api\V1\Passengers\Captains\CaptainController;
-use App\Http\Controllers\Api\V1\Passengers\Experiences\ExperienceController;
+use App\Http\Controllers\Api\V1\Passengers\Experiences\ExperienceController as PassengerExperienceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ Route::group(['prefix' => 'v1/captains'], function () {
     Route::middleware('auth:captains')->group(function () {
         Route::get('home', [HomeController::class, 'home']);
         Route::get('logout', [AuthController::class, 'logout']);
-        Route::apiResource('experiences', ExperienceController::class);
+        Route::apiResource('captain-experiences', ExperienceController::class);
     });
 });
 
@@ -66,7 +66,7 @@ Route::group(['prefix' => 'v1/passengers'], function () {
     Route::middleware('auth:passengers')->group(function () {
         Route::get('home', [HomeController::class, 'home']);
         Route::get('logout', [PassengerAuthController::class, 'logout']);
-        Route::apiResource('experiences', ExperienceController::class)->only(['index', 'show']);
+        Route::apiResource('passenger-experiences', PassengerExperienceController::class)->only(['index', 'show']);
         Route::apiResource('captains', CaptainController::class)->only(['index', 'show']);
     });
 });
