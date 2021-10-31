@@ -17,14 +17,10 @@
                         <x-label class="required">{{__("city Name")}}</x-label>
                         <div class="col-lg-8">
                             <div class="row">
-                                <div class="col-lg-6 fv-row">
-                                    <x-input type="text" field="city.ar_name" wire:model="city.ar_name"
-                                        placeholder="Arabic name" />
+                                <div class="col-lg-12 fv-row">
+                                    <x-input type="text" field="city.name" wire:model="city.name" placeholder="name" />
                                 </div>
-                                <div class="col-lg-6 fv-row">
-                                    <x-input type="text" field="city.en_name" wire:model="city.en_name"
-                                        placeholder="English name" />
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -33,12 +29,11 @@
                     <div class="row mb-6">
                         <x-label>
                             <span class="required">{{__("Country")}}</span>
-                          
+
                         </x-label>
                         <div class="col-lg-8 fv-row" wire:ignore>
                             <select wire:model="city.country_id" data-control="select2" id="country_id"
-                                name="country_id"
-                                class="form-select form-select-solid form-select-lg fw-bold">
+                                name="country_id" class="form-select form-select-solid form-select-lg fw-bold">
                                 <option>{{__("Select...")}}</option>
                                 @foreach ($countries as $country)
                                 <option value="{{$country->id}}">{{$country->en_name}}</option>
@@ -57,8 +52,8 @@
                         <!--begin::Label-->
                         <div class="col-lg-8 d-flex align-items-center">
                             <div class="form-check form-check-solid form-switch fv-row">
-                                <input class="form-check-input w-45px h-30px" type="checkbox" field="city.status" wire:model="city.status"
-                                    id="allowmarketing" checked="checked" />
+                                <input class="form-check-input w-45px h-30px" type="checkbox" field="city.status"
+                                    wire:model="city.status" id="allowmarketing" checked="checked" />
                                 <label class="form-check-label" for="allowmarketing"></label>
                             </div>
                         </div>

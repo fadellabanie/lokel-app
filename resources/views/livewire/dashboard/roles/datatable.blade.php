@@ -43,7 +43,8 @@
                                 @forelse($roles as $role)
                                 <tr wire:loading.class="opacity-50">
                                     <td>{{$role->name}}</td>
-                                    <td> {{Str::ucfirst(implode(',',$role->permissions->pluck('name')->toArray())) }}</td>
+                                    <td> {{Str::ucfirst(implode(' - ',$role->permissions->pluck('name')->toArray())) }}
+                                    </td>
                                     <td>
                                         <div class="d-flex justify-content-end flex-shrink-0">
                                             @can('edit roles')
@@ -54,7 +55,6 @@
                                             @can('delete roles')
                                             <x-delete-record-button wire:click="confirm({{ $role->id }})">
                                             </x-delete-record-button>
-                                            <x-delete-modal></x-delete-modal>
                                             @endcan
                                         </div>
                                     </td>
@@ -114,7 +114,7 @@
 
     </script>
 
-    {{-- 
+    {{--
     <script>
         $(document).ready(function () {
             $('#permission_ids').select2();

@@ -18,10 +18,10 @@ class CreatePassengersTable extends Migration
             $table->unsignedBigInteger('city_id')->nullable()->index();
             $table->unsignedBigInteger('country_id')->nullable()->index();
             $table->unsignedBigInteger('nationality_id')->nullable()->index();
-            $table->string('full_name');
-            $table->string('code')->unique();
-            $table->string('email');
-            $table->string('mobile');
+            $table->string('full_name')->index();
+            $table->string('code')->unique()->index();
+            $table->string('email')->index();
+            $table->string('mobile')->index();
             $table->timestamp('mobile_verified_at')->nullable();
             $table->string('country_code');
             $table->string('password');

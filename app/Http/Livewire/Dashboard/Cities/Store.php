@@ -13,12 +13,11 @@ class Store extends Component
     use WithFileUploads;
     use AuthorizesRequests;
 
-    public $ar_name, $en_name;
+    public $name;
     public $country_id, $icon, $status;
   
     protected $rules = [
-        'ar_name' => 'required|min:2|max:100',
-        'en_name' => 'required|min:2|max:100',
+        'name' => 'required|min:2|max:100',
         'country_id' => 'required',
         'status' => 'required',
         'icon' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',

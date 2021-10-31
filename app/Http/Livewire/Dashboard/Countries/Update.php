@@ -16,8 +16,7 @@ class Update extends Component
     public $icon;
 
     protected $rules = [
-        'country.ar_name' => 'required|min:4|max:100',
-        'country.en_name' => 'required|min:4|max:100',
+        'country.name' => 'required|min:4|max:100',
         'country.status' => 'required',
         'icon' => 'nullable',
     ];

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\ExperienceService;
+use App\Http\Requests\Api\Captains\Experiences\StoreRequest;
 use App\Http\Resources\Captains\Experiences\ExperienceCollection;
 use App\Http\Resources\Captains\Experiences\ExperienceLargeResource;
 
@@ -30,7 +31,7 @@ class ExperienceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $request['captain_id'] = Auth::id();
         $response = ExperienceService::create($request);

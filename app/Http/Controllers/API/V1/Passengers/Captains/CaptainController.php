@@ -20,7 +20,8 @@ class CaptainController extends Controller
      */
     public function index(Request $request)
     {
-        $captain = Captain::active()
+        
+        $captain = Captain::active()->NotSuspend()
         ->when($request->city_id, function ($q) use ($request) {
             $q->where('city_id', $request->city_id);
         })->when($request->country_id, function ($q) use ($request) {
@@ -30,7 +31,7 @@ class CaptainController extends Controller
         })->when($request->nationality_id, function ($q) use ($request) {
             $q->where('nationality_id', $request->nationality_id);
         })
-        ->orderBy('type', 'DESC')->paginate();
+        ->orderByDesc('rate')->limit(12)->get();
 
         return new CaptainCollection($captain);
     }
@@ -43,7 +44,7 @@ class CaptainController extends Controller
     public function show(Captain $captain)
     {
         if (!$captain) return $this->errorNotFound();
-
+        
         return $this->respondWithItem(new CaptainLargeResource($captain));
     }
 }

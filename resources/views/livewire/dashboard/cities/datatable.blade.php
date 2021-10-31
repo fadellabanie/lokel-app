@@ -39,11 +39,7 @@
                                         sortDirection="{{$sortDirection}}">
                                     </x-sort>
                                 </th>
-                                <th wire:click="sortBy('created_at')" data-sort="{{$sortDirection}}" class="min-w-90px">
-                                    {{__("Regester")}}
-                                    <x-sort field="created_at" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
-                                    </x-sort>
-                                </th>
+                            
                                 <th class="min-w-50px text-end" style="width: 87.075px;">{{__("Action")}}
                                 </th>
                             </tr>
@@ -52,17 +48,15 @@
                             @forelse($cities as $key => $city)
                             <tr wire:loading.class="opacity-50">
                                 <td>{{$loop->iteration}}</td>
-
                                 <td>
                                     <div class="cursor-pointer symbol symbol-30px symbol-md-40px">
                                         <img src="{{asset($city->icon)}}">
                                     </div>
                                 </td>
-                                <td>{{$city->en_name}}</td>
-                                <td>{{$city->country->en_name}}</td>
+                                <td>{{$city->name}}</td>
+                                <td>{{$city->country->name}}</td>
                                 <td>{!!isActive($city->status)!!}</td>
-                              
-                                <td>{{$city->created_at->format('m-d-Y')}}</td>
+                                {{--  <td>{{$city->created_at->format('m-d-Y')}}</td>  --}}
                                 <td>
                                     <div class="d-flex justify-content-end flex-shrink-0">
                                         @can('edit cities')

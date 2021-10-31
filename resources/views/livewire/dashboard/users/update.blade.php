@@ -41,65 +41,12 @@
 
                     <!--begin::Input group-->
                     <div class="row mb-6">
-                        <x-label>
-                            <span class="required">{{__("Type")}}</span>
-                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                title="Phone number must be active"></i>
-                        </x-label>
-                        <div class="col-lg-8 fv-row">
-                            <div wire:ignore>
-                                <select wire:model="type" id="type" name="type" data-control="select2"
-                                    class="form-select form-select-solid form-select-lg fw-bold">
-                                    <option disable>{{__("Select...")}}</option>
-                                    <option value="admin">{{__("Admin")}}</option>
-                                    <option value="personal">{{__("personal")}}</option>
-                                    <option value="company">{{__("company")}}</option>
-                                </select>
-                            </div>
-                            <x-error-select field="type" />
-                        </div>
-                    </div>
-                    <!--end::Input group-->
-                    @if ($type == 'company')
-                    <!--begin::Input group-->
-                    <div class="row mb-6">
-                        <x-label class="required">{{__("Trading Certification")}}</x-label>
-                        <div class="col-lg-8">
-                            <div class="row">
-                                <div class="col-lg-12 fv-row">
-                                    <x-input type="text" field="user.trading_certification"
-                                        wire:model="user.trading_certification" placeholder="Trading Certification" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end::Input group-->
-                    @endif
-
-                    <!--begin::Input group-->
-                    <div class="row mb-6">
                         <x-label class="required">{{__("mobile")}}</x-label>
                         <div class="col-lg-8">
                             <div class="row">
-                                <div class="col-lg-4 fv-row">
-                                    <div wire:ignore>
-                                        <select wire:model="country_code" data-control="select2" id="country_code"
-                                            name="country_code"
-                                            class="form-select form-select-solid form-select-lg fw-bold">=
-                                            <option value="">Select a country_code...</option>
-                                            <option value="SA">Saudi Arabia</option>
-                                        </select>
-                                    </div>
-                                    <x-error-select field="country_code" />
-
-                                </div>
-                                <div class="col-lg-4 fv-row">
+                                <div class="col-lg-12 fv-row">
                                     <x-input type="tel" field="user.mobile" wire:model="user.mobile"
                                         placeholder="Mobile" />
-                                </div>
-                                <div class="col-lg-4 fv-row">
-                                    <x-input type="tel" field="user.whatsapp_mobile" wire:model="user.whatsapp_mobile"
-                                        placeholder="Whatsapp Mobile" />
                                 </div>
                             </div>
                         </div>
@@ -118,31 +65,6 @@
                         </div>
                     </div>
                     <!--end::Input group-->
-
-
-                    <!--begin::Input group-->
-                    <div class="row mb-6">
-                        <x-label>
-                            <span class="required">{{__("City")}}</span>
-                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                title="Phone number must be active"></i>
-                        </x-label>
-                        <div class="col-lg-8 fv-row">
-                            <div wire:ignore>
-                                <select wire:model="city_id" data-control="select2" id="city_id" name="city_id"
-                                    class="form-select form-select-solid form-select-lg fw-bold">
-                                    <option>{{__("Select...")}}</option>
-                                    @foreach (cities() as $city)
-                                    <option value="{{$city->id}}">{{$city->en_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <x-error-select field="city_id" />
-                        </div>
-                    </div>
-                    <!--end::Input group-->
-
-
                     <!--begin::Input group-->
                     <div class="row mb-0">
                         <!--begin::Label-->
@@ -212,23 +134,5 @@
     </div>
 </div>
 @section('scripts')
-<script>
-    $(document).ready(function() {
 
-    $('#type').select2({
-        placeholder: 'select..',
-    }).on('change', function () {
-        @this.type = $(this).val();
-    });  $('#country_code').select2({
-        placeholder: 'select..',
-    }).on('change', function () {
-        @this.country_code = $(this).val();
-    });  $('#city_id').select2({
-        placeholder: 'select..',
-    }).on('change', function () {
-        @this.city_id = $(this).val();
-    });  
-});
-
-</script>
 @endsection

@@ -10,6 +10,6 @@ class Interest extends Model
     use HasFactory;
     
     protected $fillable = [
-        'name','icon','stats'
+        'name','icon','status'
     ];
 }

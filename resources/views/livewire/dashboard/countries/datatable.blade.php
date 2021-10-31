@@ -20,25 +20,19 @@
                                 <th wire:click="sortBy('id')" data-sort="{{$sortDirection}}">{{__("#")}}
                                     <x-sort field="id" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}"></x-sort>
                                 </th>
-                                <th class="min-w-90px">  {{__("icon")}}</th> 
+                                <th class="min-w-90px"> {{__("icon")}}</th>
 
-                                <th wire:click="sortBy('en_name')" data-sort="{{$sortDirection}}" class="min-w-50px">
+                                <th wire:click="sortBy('ename')" data-sort="{{$sortDirection}}" class="min-w-50px">
                                     {{__("Name")}}
                                     <x-sort field="name" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
                                     </x-sort>
                                 </th>
-                                <th wire:click="sortBy('status')" data-sort="{{$sortDirection}}"
-                                    class="min-w-90px">
+                                <th wire:click="sortBy('status')" data-sort="{{$sortDirection}}" class="min-w-90px">
                                     {{__("status")}}
-                                    <x-sort field="status" sortBy="{{$sortBy}}"
-                                        sortDirection="{{$sortDirection}}">
+                                    <x-sort field="status" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
                                     </x-sort>
                                 </th>
-                                <th wire:click="sortBy('created_at')" data-sort="{{$sortDirection}}" class="min-w-90px">
-                                    {{__("Regester")}}
-                                    <x-sort field="created_at" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
-                                    </x-sort>
-                                </th>
+
                                 <th class="min-w-50px text-end" style="width: 87.075px;">{{__("Action")}}
                                 </th>
                             </tr>
@@ -53,18 +47,17 @@
                                         <img src="{{asset($country->icon)}}">
                                     </div>
                                 </td>
-                                <td>{{$country->en_name}}</td>
+                                <td>{{$country->name}}</td>
                                 <td>{!!isActive($country->status)!!}</td>
-                              
-                                <td>{{$country->created_at->format('m-d-Y')}}</td>
+                                {{-- <td>{{$country->created_at->format('m-d-Y')}}</td> --}}
                                 <td>
                                     <div class="d-flex justify-content-end flex-shrink-0">
                                         @can('edit countries')
-                                        <x-edit-button href="{{route('admin.countries.edit',$country)}}"/>
+                                        <x-edit-button href="{{route('admin.countries.edit',$country)}}" />
                                         @endcan
                                         @can('delete countries')
-                                        <x-delete-record-button wire:click="confirm({{ $country->id }})"/>
-                                        @endcan                                    
+                                        <x-delete-record-button wire:click="confirm({{ $country->id }})" />
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

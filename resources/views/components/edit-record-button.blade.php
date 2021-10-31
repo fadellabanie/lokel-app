@@ -1,4 +1,4 @@
-<a {{ $attributes->merge(['class' => 'btn btn-icon btn-light btn-hover-primary btn-sm mx-3']) }}>
+<a {{ $attributes->merge(['class' => 'btn btn-icon btn-light btn-hover-primary btn-sm']) }}>
     <span class="svg-icon svg-icon-md svg-icon-primary">
         <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Write.svg-->
         <svg xmlns="http://www.w3.org/2000/svg"

@@ -22,11 +22,6 @@
                     <div class="d-flex align-items-center position-relative my-1">
                         <x-search-input></x-search-input>
                     </div>
-                    <div class="d-flex align-items-center position-relative my-1">
-                        @can('export users')
-                        <x-export-button></x-export-button>
-                        @endcan
-                    </div>
                 </div>
             </div>
         </div>
@@ -57,11 +52,7 @@
                                     <x-sort field="mobile" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
                                     </x-sort>
                                 </th>
-                                <th wire:click="sortBy('type')" data-sort="{{$sortDirection}}" class="min-w-90px">
-                                    {{__("Type")}}
-                                    <x-sort field="type" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
-                                    </x-sort>
-                                </th>
+                                
                                 <th wire:click="sortBy('status')" data-sort="{{$sortDirection}}" class="min-w-90px">
                                     {{__("Status")}}
                                     <x-sort field="status" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
@@ -97,7 +88,6 @@
                                 </td>
                                 <td>{{$user->city->en_name ?? ""}}</td>
                                 <td>{{$user->mobile}}</td>
-                                <td>{!!userType($user->type)!!}</td>
                                 <td>{!!userStatus($user->status)!!}</td>
                                 <td>{{$user->created_at->format('m-d-Y')}}</td>
                                 <td>

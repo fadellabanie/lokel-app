@@ -3,6 +3,8 @@
 namespace App\Http\Resources\Passengers\Captains;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Constants\InterestResource;
+use App\Http\Resources\Constants\CaptainGalleryResource;
 
 class CaptainLargeResource extends JsonResource
 {
@@ -16,10 +18,19 @@ class CaptainLargeResource extends JsonResource
     {
         return  [
             'id' => $this->id,
-            'full_name' => $this->first_name.' '.$this->last_name,
+            'full_name' => $this->full_name,
             'mobile' => $this->mobile,
             'rate' => $this->rate,
+            'bio' => $this->bio,
+            'city' => $this->city->name,
+            'nationality' => $this->nationality->name,
+            'smoker' => (boolean) $this->smoker,
+            'languages' => $this->languages,
+            'number_of_trips' => (boolean) $this->smoker,
+            'age' => calculateAge($this->birthday),
             'avatar' => asset($this->avatar),
+            'interests' => InterestResource::collection($this->interests),
+            'galleries' => CaptainGalleryResource::collection($this->galleries),
         ];
     }
 }

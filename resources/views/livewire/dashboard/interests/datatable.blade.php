@@ -22,16 +22,12 @@
                                 </th>
                                 <th class="min-w-90px">  {{__("icon")}}</th> 
 
-                                <th wire:click="sortBy('en_name')" data-sort="{{$sortDirection}}" class="min-w-50px">
+                                <th wire:click="sortBy('name')" data-sort="{{$sortDirection}}" class="min-w-50px">
                                     {{__("Name")}}
                                     <x-sort field="name" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
                                     </x-sort>
                                 </th>
-                                <th wire:click="sortBy('country_id')" data-sort="{{$sortDirection}}" class="min-w-50px">
-                                    {{__("Country")}}
-                                    <x-sort field="country_id" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
-                                    </x-sort>
-                                </th>
+                              
                                 <th wire:click="sortBy('status')" data-sort="{{$sortDirection}}"
                                     class="min-w-90px">
                                     {{__("status")}}

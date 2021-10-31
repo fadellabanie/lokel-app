@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\Captains\ProviderResource;
+use App\Http\Resources\Captains\CaptainResource;
 use App\Http\Requests\Api\Captains\Auth\LoginRequest;
 use App\Http\Requests\Api\Captains\Auth\VerifyRequest;
 use App\Http\Requests\Api\Captains\Auth\RegisterRequest;
@@ -24,23 +24,10 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        $captain = Captain::create([
-            'code' =>  generateRandomCode('PRV'),
-            'full_name' => $request->full_name,
-            'mobile' => $request->mobile,
-            'email' => $request->email,
-            'country_code' => $request->country_code,
-            'city_id' => $request->city_id,
-            'country_id' => $request->country_id,
-            'nationality_id' => $request->nationality_id,
-            'avatar' => $request->avatar,
-            'birthday' => $request->birthday,
-            'gender' => $request->gender,
-            'password' => bcrypt($request->password),
-            'country_of_residence' => $request->country_of_residence,
-            'device_token' => $request->device_token,
-            'status' => false,
-        ]);
+        $request['code'] = generateRandomCode('CPT');
+        $request['password'] = bcrypt($request->password);
+
+        $captain = Captain::create($request->all());
 
         $token =  $captain->createToken('Token-Login')->accessToken;
 
@@ -77,12 +64,18 @@ class AuthController extends Controller
             'device_token' => $request->device_token,
         ]);
 
+        $captain->userToken()->update([
+            'token' => $token,
+            'device_id' => '$request->device_id',
+            'device_type' => '$request->device_type',
+        ]);
+/*
         $data = DB::table('oauth_access_tokens')->where('user_id', $captain->id)->get();
         if ($data) {
             DB::table('oauth_access_tokens')->where('user_id', $captain->id)->delete();
         }
-
-        return $this->respondWithItem(new ProviderResource($captain));
+*/
+        return $this->respondWithItem(new CaptainResource($captain));
     }
 
 
@@ -134,7 +127,7 @@ class AuthController extends Controller
         $captain = Captain::where('mobile', $request->mobile)->first();
         $captain->update(['password' => bcrypt($request->new_password)]);
 
-        return $this->respondWithItem(new ProviderResource($captain));
+        return $this->respondWithItem(new CaptainResource($captain));
     }
     /**
      * Check Captains 
@@ -168,8 +161,7 @@ class AuthController extends Controller
 
         $captain->update(['mobile_verified_at' => now()]);
 
-
-        return $this->respondWithItem(new ProviderResource($captain));
+        return $this->respondWithItem(new CaptainResource($captain));
     }
 
     /**

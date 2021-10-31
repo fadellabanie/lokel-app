@@ -1,5 +1,5 @@
-<a {{ $attributes->merge(['class' => 'btn btn-icon btn-light btn-hover-primary btn-sm']) }}>
-    <span class="svg-icon svg-icon-md svg-icon-primary">
+<a {{ $attributes->merge(['class' => 'btn btn-icon btn-light btn-hover-primary btn-sm mx-1']) }}>
+    <span class="svg-icon svg-icon-md svg-icon-primary ">
         <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
         <svg xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"

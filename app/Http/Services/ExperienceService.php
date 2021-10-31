@@ -22,7 +22,7 @@ class ExperienceService
         try {
             $experience = Experience::create([
                 'city_id' => $data['city_id'],
-                'country_id' => $data['country_id'],
+                'country_id' => getCountry($data['city_id']),
                 'captain_id' => $data['captain_id'],
                 'icon' => $data['icon'],
                 'title' => $data['title'],
@@ -38,9 +38,9 @@ class ExperienceService
                 'pick_up_address' => $data['pick_up_address'],
                 'pick_up_lat' => $data['pick_up_lat'],
                 'pick_up_lng' => $data['pick_up_lat'],
-                'dropp_of_address' => $data['dropp_of_address'],
-                'dropp_of_lat' => $data['dropp_of_lat'],
-                'dropp_of_lng' => $data['dropp_of_lng'],
+                'drop_of_address' => $data['drop_of_address'],
+                'drop_of_lat' => $data['drop_of_lat'],
+                'drop_of_lng' => $data['drop_of_lng'],
                 'meals' => $data['meals'],
                 'status' => Experience::PENDING,
             ]);
@@ -80,7 +80,6 @@ class ExperienceService
                 'captain_id' => $data['captain_id'],
                 'icon' => $data['icon'],
                 'title' => $data['title'],
-                'code' => generateRandomCode('EXP'),
                 'description' => $data['description'],
                 'thumbnail' => $data['thumbnail'],
                 'duration_type' => $data['duration_type'],
@@ -92,11 +91,10 @@ class ExperienceService
                 'pick_up_address' => $data['pick_up_address'],
                 'pick_up_lat' => $data['pick_up_lat'],
                 'pick_up_lng' => $data['pick_up_lat'],
-                'dropp_of_address' => $data['dropp_of_address'],
-                'dropp_of_lat' => $data['dropp_of_lat'],
-                'dropp_of_lng' => $data['dropp_of_lng'],
+                'drop_of_address' => $data['drop_of_address'],
+                'drop_of_lat' => $data['drop_of_lat'],
+                'drop_of_lng' => $data['drop_of_lng'],
                 'meals' => $data['meals'],
-                'status' => Experience::PENDING,
             ]);
             if ($data['images']) {
                 foreach ($data['images'] as $image) {
@@ -107,6 +105,13 @@ class ExperienceService
                     ]);
                 }
             }
+
+            if ($experience->isDirty(['title', 'price', 'description'])) {
+                $experience->update([
+                    'status' => Experience::PENDING,
+                ]);
+            }
+
             DB::commit();
             return $response;
         } catch (\Exception $exception) {

@@ -14,4 +14,4 @@
 </span>
 <!--end::Svg Icon-->
 <input type="text" wire:model="search"
-    class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="Search Order">
+    class="form-control form-control-solid form-select-sm w-150px ps-9" placeholder="Search">

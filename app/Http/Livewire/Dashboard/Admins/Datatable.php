@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Datatable extends Component
 {
-
     use WithPagination;
     use AuthorizesRequests;
 

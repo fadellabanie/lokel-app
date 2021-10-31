@@ -13,12 +13,11 @@ class Store extends Component
     use WithFileUploads;
     use AuthorizesRequests;
 
-    public $ar_name, $en_name;
+    public $name;
     public $country_id, $icon, $status;
   
     protected $rules = [
-        'ar_name' => 'required|min:4|max:100',
-        'en_name' => 'required|min:4|max:100',
+        'name' => 'required|min:4|max:100',
         'icon' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
         'status' => 'required',
     ];
@@ -42,7 +41,6 @@ class Store extends Component
         session()->flash('alert', __('Saved Successfully.'));
 
         return redirect()->route('admin.countries.index');
-
     }
 
     public function resetForm()

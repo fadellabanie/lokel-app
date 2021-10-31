@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.users.index');
     }
 
     /**
@@ -24,7 +25,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.users.create');
+
     }
 
     /**
@@ -35,7 +37,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -44,9 +46,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('dashboard.users.show',compact('user'));
+
     }
 
     /**
@@ -55,9 +58,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('dashboard.users.edit',compact('user'));
+
     }
 
     /**

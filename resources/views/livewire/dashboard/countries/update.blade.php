@@ -17,14 +17,11 @@
                         <x-label class="required">{{__("country Name")}}</x-label>
                         <div class="col-lg-8">
                             <div class="row">
-                                <div class="col-lg-6 fv-row">
-                                    <x-input type="text" field="country.ar_name" wire:model="country.ar_name"
-                                        placeholder="Arabic name" />
+                                <div class="col-lg-12 fv-row">
+                                    <x-input type="text" field="country.name" wire:model="country.name"
+                                        placeholder="name" />
                                 </div>
-                                <div class="col-lg-6 fv-row">
-                                    <x-input type="text" field="country.en_name" wire:model="country.en_name"
-                                        placeholder="English name" />
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
