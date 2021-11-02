@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
                                             <a href="{{route('admin.captains.show',$experience->captain)}}"
-                                                class="fs-6 text-gray-800 text-hover-primary">{{$experience->captain->full_name}}</a>
+                                                class="fs-6 text-gray-800 text-hover-primary">{{$experience->captain->first_name." ".$experience->captain->last_name}}</a>
                                             <div class="fw-bold text-gray-400">{{$experience->captain->email}}</div>
                                             <div class="fw-bold text-gray-400">{{$experience->captain->mobile}}</div>
                                         </div>

@@ -55,11 +55,25 @@ class Datatable extends Component
         $this->emit('closeDeleteModal'); // Close model to using to jquery
     }
 
-    public function freeze($user_id)
+    public function confirmFreeze($id)
     {
-        Passenger::whereId($user_id)->update([
+        $this->user_id = $id;
+
+        $this->emit('openFreezeModal'); // Open model to using to jquery
+    }
+
+    public function freeze()
+    {
+        $validatedData = $this->validate();
+
+        Passenger::whereId($this->user_id)->update([
             'suspend' => true,
+            'block_date' => $validatedData['block_date'],
         ]);
+        $this->reset();
+
+        $this->emit('closeFreezeModal'); // Open model to using to jquery
+
         session()->flash('alert', __('Account Freeze Successfully.'));
     }
 
@@ -73,10 +87,11 @@ class Datatable extends Component
     }
 
 
+
     public function render()
     {
         return view('livewire.dashboard.passengers.datatable', [
-            'passengers' => Passenger::with('city')
+            'passengers' => Passenger::query()->with('city:id,name')
                 ->when('city_id', function ($q) {
                     if ($this->city_id != 'all') {
                         $q->where('city_id', $this->city_id);
@@ -94,6 +109,7 @@ class Datatable extends Component
                 })
                 ->select('id','full_name','mobile','email','suspend','status','avatar','city_id','created_at')
                 ->orderBy($this->sortBy, $this->sortDirection)
+                ->limit($this->count)
                 ->paginate($this->count),
         ]);
     }

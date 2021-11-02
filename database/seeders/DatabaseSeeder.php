@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
     // Passenger::factory(10)->create();
 
 
-    Experience::factory()->count(1)->create()->each(function ($data) {
+    Experience::factory()->count(100)->create()->each(function ($data) {
       ExperienceMedia::factory($data)->count(5)->create([
         'experience_id' => $data->id,
       ]);

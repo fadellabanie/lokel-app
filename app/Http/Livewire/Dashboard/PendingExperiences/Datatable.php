@@ -44,13 +44,13 @@ class Datatable extends Component
         $this->emit('openDeleteModal'); // Open model to using to jquery
 
         $this->data_id = $id;
-    }  
-    
+    }
+
     public function destroy()
     {
         $row = Experience::findOrFail($this->data_id);
         $row->delete();
-        
+
         $this->emit('closeDeleteModal'); // Close model to using to jquery
     }
     public function verify($user_id)
@@ -62,10 +62,13 @@ class Datatable extends Component
     }
     public function render()
     {
-        return view('livewire.dashboard.pending-experiences.datatable',[
-            'experiences' => Experience::with('captain')->pending()->orderBy($this->sortBy, $this->sortDirection)
-            ->paginate($this->count),
+        return view('livewire.dashboard.pending-experiences.datatable', [
+            'experiences' => Experience::query()
+                ->with('captain:id,first_name,last_name,email,mobile,avatar')
+                ->without(['medias'])
+                ->pending()
+                ->orderBy($this->sortBy, $this->sortDirection)
+                ->paginate($this->count),
         ]);
     }
-
 }

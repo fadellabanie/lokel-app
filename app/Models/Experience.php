@@ -18,7 +18,7 @@ class Experience extends Model
     protected $fillable = [
         'city_id', 'country_id', 'captain_id', 'icon', 'title', 'code', 'description', 'thumbnail',
         'duration_type', 'duration', 'price', 'included', 'expect', 'faqs', 'pick_up_address', 'pick_up_lat',
-        'pick_up_lng', 'drop_of_address', 'capacity', 'drop_of_lat', 'drop_of_lng', 'meals', 'status'
+        'pick_up_lng', 'drop_of_address', 'capacity', 'drop_of_lat', 'drop_of_lng', 'meals', 'rate','status'
     ];
 
     public $with = ['captain','medias'];
@@ -30,6 +30,14 @@ class Experience extends Model
     public function scopeAccept($query)
     {
         return $query->where('status', self::ACCEPT);
+    }
+     public function scopeMax($query)
+    {
+        return $query->max('price');
+    }  
+    public function scopeMin($query)
+    {
+        return $query->min('price');
     }
     public function scopeMine($query)
     {

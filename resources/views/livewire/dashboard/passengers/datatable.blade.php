@@ -39,7 +39,7 @@
                                     <x-sort field="full_name" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
                                     </x-sort>
                                 </th>
-                               
+
                                 <th wire:click="sortBy('city_id')" data-sort="{{$sortDirection}}" class="min-w-50px">
                                     {{__("City")}}
                                     <x-sort field="city_id" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
@@ -49,8 +49,8 @@
                                     {{__("Suspend")}}
                                     <x-sort field="suspend" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
                                     </x-sort>
-                                </th>   
-                              
+                                </th>
+
                                 <th wire:click="sortBy('created_at')" data-sort="{{$sortDirection}}" class="min-w-90px">
                                     {{__("Regester")}}
                                     <x-sort field="created_at" sortBy="{{$sortBy}}" sortDirection="{{$sortDirection}}">
@@ -81,18 +81,17 @@
                                     </div>
                                 </td>
                                 <td>{{$passenger->city->name}}</td>
-                                <td @if ($passenger->suspend == false)
-                                    wire:click="freeze({{ $passenger->id }})"
-                                    @else
+                                <td @if ($passenger->suspend == true)
                                     wire:click="unFreeze({{ $passenger->id }})"
+                                    @else
+                                    wire:click="confirmFreeze({{ $passenger->id }})"
                                     @endif>{!!userSuspend($passenger->suspend)!!}
-                                </td>  
-
+                                </td>
                                 <td>{{$passenger->created_at->format('m-d-Y')}}</td>
                                 <td>
                                     <div class="d-flex justify-content-end flex-shrink-0">
-                                        <x-show-button href="{{route('admin.passengers.show',$passenger)}}"/>
-                                        <x-edit-button href="{{route('admin.passengers.edit',$passenger)}}"/>
+                                        <x-show-button href="{{route('admin.passengers.show',$passenger)}}" />
+                                        <x-edit-button href="{{route('admin.passengers.edit',$passenger)}}" />
                                         <x-delete-record-button wire:click="confirm({{ $passenger->id }})">
                                         </x-delete-record-button>
                                     </div>
@@ -124,7 +123,8 @@
         </div>
         <!--end::Card body-->
     </div>
-    <x-delete-modal></x-delete-modal>
+    <x-delete-modal />
+    <x-freeze-modal />
 
 </div>
 
@@ -142,6 +142,12 @@
     }); 
     window.livewire.on('closeBlockModal', () => {
         $('#blockModal').modal('hide');
+    });
+    window.livewire.on('openFreezeModal', () => {
+        $('#freezeModal').modal('show');
+    }); 
+    window.livewire.on('closeFreezeModal', () => {
+        $('#freezeModal').modal('hide');
     });
 </script>
 @endsection

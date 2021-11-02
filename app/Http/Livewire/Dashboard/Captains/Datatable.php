@@ -56,11 +56,24 @@ class Datatable extends Component
         $this->emit('closeDeleteModal'); // Close model to using to jquery
     }
 
-    public function freeze($user_id)
+    public function confirmFreeze($id)
     {
-        Captain::whereId($user_id)->update([
-            'suspend' => false,
+        $this->user_id = $id;
+
+        $this->emit('openFreezeModal'); // Open model to using to jquery
+    }
+
+    public function freeze()
+    {
+        $validatedData = $this->validate();
+
+        Captain::whereId($this->user_id)->update([
+            'suspend' => true,
+            'block_date' => $validatedData['block_date'],
         ]);
+        $this->reset();
+
+        $this->emit('closeFreezeModal'); // Open model to using to jquery
 
         session()->flash('alert', __('Account Freeze Successfully.'));
     }
@@ -68,7 +81,7 @@ class Datatable extends Component
     public function unFreeze($user_id)
     {
         Captain::whereId($user_id)->update([
-            'suspend' => true,
+            'suspend' => false,
         ]);
 
         session()->flash('alert', __('Account UnFreeze Successfully.'));
@@ -93,7 +106,7 @@ class Datatable extends Component
     public function render()
     {
         return view('livewire.dashboard.captains.datatable', [
-            'captains' => Captain::with('city')
+            'captains' => Captain::query()->with('city')
             ->when('city_id', function ($q) {
                 if ($this->city_id != 'all') {
                     $q->where('city_id', $this->city_id);

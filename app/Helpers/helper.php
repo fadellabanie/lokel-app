@@ -87,9 +87,9 @@ if (!function_exists('userSuspend')) {
 	function userSuspend($type)
 	{
 		if ($type == true) {
-			return '<a href="#"><div class="badge badge-light-success fw-bolder">' . __("Active") . '</div></a>';
+			return '<a href="#"><div class="badge badge-light-danger fw-bolder">' .  __("Freeze")  . '</div></a>';
 		} elseif ($type == false) {
-			return '<a href="#"><div class="badge badge-light-danger fw-bolder">' . __("Freeze") . '</div></a>';
+			return '<a href="#"><div class="badge badge-light-success fw-bolder">' . __("Active"). '</div></a>';
 		}
 	}
 }

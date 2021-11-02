@@ -128,7 +128,7 @@
                     </div>
                     <!--end::Avatar-->
                     <!--begin::Name-->
-                    <a href="#"
+                    <a href="{{route('admin.captains.show',$experience->captain)}}"
                         class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">{{$experience->captain->first_name."
                         ".$experience->captain->last_name}}</a>
                     <!--end::Name-->

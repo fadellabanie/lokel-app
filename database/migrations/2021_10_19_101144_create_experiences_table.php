@@ -30,6 +30,7 @@ class CreateExperiencesTable extends Migration
             $table->longText('included');
             $table->longText('expect');
             $table->longText('faqs');
+            $table->double('rate')->default(0);
             $table->string('pick_up_address');
             $table->decimal('pick_up_lat', 12, 8)->nullable();
             $table->decimal('pick_up_lng', 12, 8)->nullable();

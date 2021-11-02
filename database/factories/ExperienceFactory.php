@@ -24,9 +24,9 @@ class ExperienceFactory extends Factory
     public function definition()
     {
         return [
-            'city_id'=>$this->faker->randomElement([1,2,3,4,5]),
-            'country_id'=>$this->faker->randomElement([1,2,3,4,5]),
-            'captain_id'=>$this->faker->randomElement([1,2,3,4,5]),
+            'city_id' => $this->faker->randomElement([1, 2, 3, 4, 5]),
+            'country_id' => $this->faker->randomElement([1, 2, 3, 4, 5]),
+            'captain_id' => $this->faker->randomElement([1, 2, 3, 4, 5]),
             'code' => generateRandomCode('EXP'),
             'icon' =>  $this->faker->imageUrl(),
             'title' => $this->faker->sentence,
@@ -35,6 +35,8 @@ class ExperienceFactory extends Factory
             'duration_type' => 1,
             'duration' =>  $this->faker->randomNumber(),
             'price' => $this->faker->randomNumber(3),
+            'capacity' => $this->faker->randomNumber(2),
+            'rate'=> $this->faker->randomElement([1.5,2.2,4.2,3.5,5.0,2.1,4.8,2.9]),
             'included' =>  $this->faker->sentence,
             'expect' =>  $this->faker->sentence,
             'faqs' =>  $this->faker->sentence,
@@ -45,7 +47,8 @@ class ExperienceFactory extends Factory
             'drop_of_lat' =>  $this->faker->latitude,
             'drop_of_lng' =>  $this->faker->longitude,
             'meals' => true,
-            'status' => Experience::PENDING,
+            //'status' => Experience::PENDING,
+            'status' => Experience::ACCEPT,
         ];
     }
 

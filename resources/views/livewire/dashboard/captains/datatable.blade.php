@@ -89,9 +89,9 @@
                                 </td>
                                 <td>{{$captain->city->name}}</td>
                                 <td @if ($captain->suspend == true)
-                                    wire:click="freeze({{ $captain->id }})"
-                                    @else
                                     wire:click="unFreeze({{ $captain->id }})"
+                                    @else
+                                    wire:click="confirmFreeze({{ $captain->id }})"
                                     @endif>{!!userSuspend($captain->suspend)!!}
                                 </td>
                                 <td @if ($captain->status == false)
@@ -136,7 +136,9 @@
         </div>
         <!--end::Card body-->
     </div>
-    <x-delete-modal></x-delete-modal>
+    
+    <x-delete-modal/>
+    <x-freeze-modal/>
 
 </div>
 
@@ -154,6 +156,12 @@
     }); 
     window.livewire.on('closeBlockModal', () => {
         $('#blockModal').modal('hide');
+    });
+     window.livewire.on('openFreezeModal', () => {
+        $('#freezeModal').modal('show');
+    }); 
+    window.livewire.on('closeFreezeModal', () => {
+        $('#freezeModal').modal('hide');
     });
 </script>
 @endsection
