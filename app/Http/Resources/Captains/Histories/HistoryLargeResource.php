@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Captains\Experiences;
+namespace App\Http\Resources\Captains\Histories;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ExperienceTinyResource extends JsonResource
+class HistoryLargeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,12 +22,7 @@ class ExperienceTinyResource extends JsonResource
             'pick_up_address' => $this->pick_up_address,
             'drop_of_address' => $this->drop_of_address,
             'icon' =>  asset($this->icon),
-            'passengers' => [
-                'full_name' => $this->captain->first_name . ' ' . $this->captain->last_name,
-                'avatar' => asset($this->captain->avatar),
-                'rate' => $this->captain->rate,
-                'number_of_trips' => $this->captain->number_of_trips,
-            ]
+            'passengers' => HistoryPassengersTinyResource::collection($this->passengers),
         ];
     }
 }

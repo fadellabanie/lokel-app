@@ -15,13 +15,17 @@ class Experience extends Model
     const REJECT = 2;
     const EXPIRED = 3;
 
+    const WITTING = 0;
+    const START = 1;
+    const FINISH = 2;
+
     protected $fillable = [
         'city_id', 'country_id', 'captain_id', 'icon', 'title', 'code', 'description', 'thumbnail',
         'duration_type', 'duration', 'price', 'included', 'expect', 'faqs', 'pick_up_address', 'pick_up_lat',
-        'pick_up_lng', 'drop_of_address', 'capacity', 'drop_of_lat', 'drop_of_lng', 'meals', 'rate','status'
+        'pick_up_lng', 'drop_of_address', 'capacity', 'drop_of_lat', 'drop_of_lng', 'meals', 'rate', 'status'
     ];
 
-    public $with = ['captain','medias'];
+    public $with = ['captain', 'medias'];
 
     public function scopePending($query)
     {
@@ -31,10 +35,10 @@ class Experience extends Model
     {
         return $query->where('status', self::ACCEPT);
     }
-     public function scopeMax($query)
+    public function scopeMax($query)
     {
         return $query->max('price');
-    }  
+    }
     public function scopeMin($query)
     {
         return $query->min('price');
@@ -61,6 +65,22 @@ class Experience extends Model
     }
     public function passengers()
     {
-        return $this->belongsToMany(Passenger::class, 'experience_passenger', 'experience_id', 'passenger_id')->withTimestamps();
+        return $this->belongsToMany(Passenger::class, 'experience_passenger', 'experience_id', 'passenger_id')
+            ->withPivot('status')
+            ->withTimestamps();
+    }
+    public function passengersFinished()
+    {
+        return $this->belongsToMany(Passenger::class, 'experience_passenger', 'experience_id', 'passenger_id')
+            ->withPivot('status')
+            ->wherePivot('status', Experience::START) ## <---
+            ->withTimestamps();
+    }
+    public function passengersWitting()
+    {
+        return $this->belongsToMany(Passenger::class, 'experience_passenger', 'experience_id', 'passenger_id')
+            ->withPivot('status')
+            ->wherePivot('status', Experience::WITTING) ## <---
+            ->withTimestamps();
     }
 }
